@@ -19,6 +19,10 @@ configuration:
       type: [number, boolean]
     pr:
       type: boolean
+    skip-restore:
+      type: boolean
+    skip-upload:
+      type: boolean
     s3:
       profile:
         type: string
