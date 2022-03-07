@@ -15,6 +15,9 @@ function expand_templates() {
     HASHER_BIN="shasum"
   fi
 
+  # Get the architecture of the machine
+  ARCH=$(arch)
+
   while [[ "$CACHE_KEY" =~ (.*)\{\{\ *(.*)\ *\}\}(.*) ]]; do
     TEMPLATE_VALUE="${BASH_REMATCH[2]}"
     EXPANDED_VALUE=""
@@ -32,6 +35,9 @@ function expand_templates() {
       ;;
     "id"*)
       EXPANDED_VALUE="${BK_CACHE_ID}"
+      ;;
+    "runner.arch"*)
+      EXPANDED_VALUE="${ARCH}"
       ;;
     "runner.os"*)
       case $OSTYPE in
