@@ -21,6 +21,9 @@ function expand_templates() {
     case $TEMPLATE_VALUE in
     "checksum "*)
       TARGET="$(echo -e "${TEMPLATE_VALUE/"checksum"/""}" | tr -d \' | tr -d \" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+      if [[ "$TARGET" == "Podfile.lock" ]]; then
+        TARGET="${PODFILE_PATH}${TARGET}"
+      fi
       EXPANDED_VALUE=$(find "$TARGET" -type f -exec $HASHER_BIN {} \; | sort -k 2 | $HASHER_BIN | awk '{print $1}')
       ;;
     "git.branch"*)
