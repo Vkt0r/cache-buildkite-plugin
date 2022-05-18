@@ -58,7 +58,12 @@ if [[ -n "${BUILDKITE_PLUGIN_CACHE_KEY:-}" ]]; then
 
   while IFS='=' read -r path _; do
     if [[ $path =~ ^(BUILDKITE_PLUGIN_CACHE_PATHS_[0-9]+) ]]; then
-      paths+=("${!path}")
+      if [[ "${!path}" == "Pods/*" ]]; then
+        paths+=("${PODFILE_PATH}${!path}")
+      else 
+        paths+=("${!path}")
+      fi
+      
     fi
   done < <(env | sort)
 
